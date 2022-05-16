@@ -10,13 +10,13 @@ import java.util.function.Consumer;
 import javax.swing.SwingUtilities;
 
 public class DropPngListener extends DropTargetAdapter {
-	
+
 	private final Consumer<File> loader;
-	
+
 	public DropPngListener(Consumer<File> loader) {
 		this.loader = loader;
 	}
-	
+
 	@Override
 	@SuppressWarnings("unchecked")
 	public void drop(DropTargetDropEvent dtde) {
@@ -38,7 +38,7 @@ public class DropPngListener extends DropTargetAdapter {
             dtde.rejectDrop();
         }
 	}
-	
+
 	private static File getPngFile(List<File> files) {
 		for (File file : files) {
         	if (file.getName().toLowerCase().endsWith(".png")) {

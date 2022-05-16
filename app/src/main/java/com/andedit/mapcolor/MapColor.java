@@ -4,10 +4,10 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 
 public class MapColor {
-	
+
 	private static int a;
 	private static final MapColor[] COLORS = new MapColor[61];
-	
+
 	static {
 		add("PALE_GREEN", 8368696);
 		add("PALE_YELLOW", 16247203);
@@ -71,15 +71,15 @@ public class MapColor {
 		add("RAW_IRON_PINK", 14200723);
 		add("LICHEN_GREEN", 8365974);
 	}
-	
+
 	private static void add(String name, int color) {
 		COLORS[a] = new MapColor(name, color, a++);
 	}
-	
+
 	public final Color color;
 	public final String name;
 	public final int id;
-	
+
 	public MapColor(String name, int color, int id) {
 		this.color = new Color(color);
 		this.name = name;
@@ -92,21 +92,21 @@ public class MapColor {
 		r -= color.getRed();
 		g -= color.getGreen();
 		b -= color.getBlue();
-		return (((512+rmean)*r*r)>>>8) + 4*g*g + (((767-rmean)*b*b)>>>8);
+		return (((512+rmean)*r*r)>>8) + 4*g*g + (((767-rmean)*b*b)>>8);
 	}
-	
+
 	public String toHex() {
 		return '#' + Integer.toHexString(color.getRGB() & 0xFFFFFFF);
 	}
-	
+
 	public Color getInvertColor() {
 		int val = (color.getRed() + color.getGreen() + color.getBlue()) / 3;
 		return val > 130 ? Color.BLACK : Color.WHITE;
 	}
-	
+
 	public static MapColor getMapColor(BufferedImage img) {
-		if (img == null) return null; 
-		
+		if (img == null) return null;
+
 		// Averaging color from image
 		long r=0, g=0, b=0, s=0;
 		for (int x = 0; x < img.getWidth(); x++)
@@ -119,11 +119,11 @@ public class MapColor {
 				s++;
 			}
 		}
-		
+
 		r = (int)Math.sqrt(r/s);
 		g = (int)Math.sqrt(g/s);
 		b = (int)Math.sqrt(b/s);
-		
+
 		MapColor result = null;
 		int num = Integer.MAX_VALUE;
 		for (MapColor index : COLORS) {
@@ -133,10 +133,10 @@ public class MapColor {
 				result = index;
 			}
 		}
-		
+
 		return result;
 	}
-	
+
 	private static long pow(int num) {
 		return num * num;
 	}

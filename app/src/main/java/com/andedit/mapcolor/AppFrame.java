@@ -23,7 +23,7 @@ import javax.swing.border.EmptyBorder;
 public class AppFrame extends JFrame {
 
 	private static final long serialVersionUID = -3837044151708182897L;
-	
+
 	private final JPanel contentPane;
 	private final ImagePreview cTexture;
 	private final JTextField tfColorName;
@@ -45,22 +45,22 @@ public class AppFrame extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		cTexture = new ImagePreview(this::loadTexture);
 		cTexture.setBounds(10, 12, 128, 128);
 		contentPane.add(cTexture);
-		
+
 		pColor = new JPanel();
 		pColor.setBackground(Color.WHITE);
 		pColor.setBounds(150, 12, 142, 70);
 		contentPane.add(pColor);
 		pColor.setLayout(new GridLayout(1, 0, 0, 0));
-		
+
 		lColorHex = new JLabel("Color Hex");
 		lColorHex.setFont(new Font("Dialog", Font.BOLD, 18));
 		lColorHex.setHorizontalAlignment(SwingConstants.CENTER);
 		pColor.add(lColorHex);
-		
+
 		tfColorName = new JTextField();
 		tfColorName.setBackground(Color.WHITE);
 		tfColorName.setEditable(false);
@@ -68,7 +68,7 @@ public class AppFrame extends JFrame {
 		tfColorName.setBounds(150, 89, 142, 23);
 		contentPane.add(tfColorName);
 		tfColorName.setColumns(10);
-		
+
 		tfColorId = new JTextField();
 		tfColorId.setBackground(Color.WHITE);
 		tfColorId.setEditable(false);
@@ -76,13 +76,14 @@ public class AppFrame extends JFrame {
 		tfColorId.setColumns(10);
 		tfColorId.setBounds(150, 117, 142, 23);
 		contentPane.add(tfColorId);
-		
+
 		JButton bTexture = new JButton("Select Texture");
 		bTexture.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				SwingUtilities.invokeLater(() -> {
 					JFileChooser chooser = new JFileChooser();
-					
+
 					chooser.setFileFilter(new PngFilter());
 					if(chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 					    loadTexture(chooser.getSelectedFile());
@@ -92,9 +93,10 @@ public class AppFrame extends JFrame {
 		});
 		bTexture.setBounds(10, 152, 128, 28);
 		contentPane.add(bTexture);
-		
+
 		JButton bClear = new JButton("Clear");
 		bClear.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				SwingUtilities.invokeLater(() -> {
 					cTexture.clear();
@@ -108,7 +110,7 @@ public class AppFrame extends JFrame {
 		});
 		bClear.setBounds(10, 192, 128, 28);
 		contentPane.add(bClear);
-		
+
 		JTextPane tpDescription = new JTextPane();
 		tpDescription.setEditable(false);
 		tpDescription.setBackground(new Color(238, 238, 238));
@@ -116,7 +118,7 @@ public class AppFrame extends JFrame {
 		tpDescription.setBounds(150, 148, 142, 71);
 		contentPane.add(tpDescription);
 	}
-	
+
 	public void loadTexture(File file) {
 		BufferedImage img;
 		try {
@@ -127,7 +129,7 @@ public class AppFrame extends JFrame {
 		}
 		MapColor index = MapColor.getMapColor(img);
 		if (index == null) return;
-		
+
 		pColor.setBackground(index.color);
 		lColorHex.setText(index.toHex());
 		lColorHex.setForeground(index.getInvertColor());

@@ -13,17 +13,17 @@ import javax.swing.SwingUtilities;
 
 public class ImagePreview extends Canvas {
 	private static final long serialVersionUID = 1L;
-	
+
 	private volatile Image image;
 	private final DropTarget dropTarget;
-	
+
 	private final DropPngListener listener;
-	
+
 	public ImagePreview(Consumer<File> loader) {
 		listener = new DropPngListener(loader);
 		dropTarget = new DropTarget(this, DnDConstants.ACTION_COPY_OR_MOVE, null);
 		image = Res.DND;
-		SwingUtilities.invokeLater(() -> 
+		SwingUtilities.invokeLater(() ->
 			getGraphics().drawImage(Res.DND, 0, 0, getWidth(), getHeight(), null)
 		);
 	}
@@ -32,16 +32,16 @@ public class ImagePreview extends Canvas {
 		this.image = image;
 		repaint();
 	}
-	
+
 	@Override
 	public void paint(Graphics g) {
 		g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
 	}
-	
+
 	public void clear() {
 		setImage(Res.DND);
 	}
-	
+
 	@Override
     public void addNotify() {
         super.addNotify();
